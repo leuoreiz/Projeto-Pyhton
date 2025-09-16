@@ -1,3 +1,4 @@
+import random
 
 class Personagem:
     def __init__(self, nome, classe, raca):
@@ -22,3 +23,15 @@ class Personagem:
         for chave, valor in self.atributos.items():
             print(f"  {chave:<15}: {valor}")
         print("---------------------------\n")
+
+    def atacar(self, alvo):
+        dano = self.classe.ataque + random.randint(1, 6)
+        print(f"{self.nome} ataca {alvo.nome} causando {dano} de dano!")
+        alvo.receber_dano(dano)
+
+    def receber_dano(self, dano):
+        self.vida -= (self.classe.defesa - dano) 
+        print(f"Você recebeu {dano} de dano e tem {self.vida} de vida restante.")
+
+    def esta_vivo(self):
+        return self.vida > 0

@@ -6,7 +6,7 @@ def rolar_dado():
         print(f"Você rolou {dado}")
         soma += dado
     return soma
-    print("---------------------------------")
+    print(f"Você rolou {dado}")
 
 def rolar_dado_heroico():
     dados = [random.randint(1, 6) for _ in range(4)]

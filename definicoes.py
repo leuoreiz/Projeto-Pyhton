@@ -9,9 +9,9 @@ class Raca:
         self.habilidades = habilidades
 
 class Classe:
-    def __init__(self, nome, requisitos, tabela_progressao, permissoes_equip, habilidades_por_nivel):
+     def __init__(self, nome, vida, ataque, defesa, xp):
         self.nome = nome
-        self.requisitos = requisitos
-        self.tabela_progressao = tabela_progressao
-        self.permissoes_equip = permissoes_equip
-        self.habilidades_por_nivel = habilidades_por_nivel
+        self.vida = vida
+        self.ataque = ataque
+        self.defesa = defesa
+        self.xp = xp

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <title>Ficha do Personagem</title>
+</head>
+<body>
+  <h1>Ficha do Personagem</h1>
+  <p><strong>Nome:</strong> {{ heroi.nome }}</p>
+  <p><strong>Classe:</strong> {{ heroi.classe.nome }}</p>
+  <p><strong>Raça:</strong> {{ heroi.raca.nome }}</p>
+  <p><strong>Nível:</strong> {{ heroi.nivel }}</p>
+
+  <h2>Atributos</h2>
+  <ul>
+    {% for chave, valor in heroi.atributos.items() %}
+      <li>{{ chave }}: {{ valor }}</li>
+    {% endfor %}
+  </ul>
+
+  <a href="/">Criar outro personagem</a>
+</body>
+</html>

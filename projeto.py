@@ -1,6 +1,7 @@
 
 from personagem import Personagem
 import geracao_atributos
+import batalha
 
 def main():
     
@@ -52,7 +53,14 @@ def main():
     print("\nParabéns! Criação finalizada.")
     meu_personagem.mostrar_ficha()
 
-
-
+    print("Deseja andar? 1 - Sim | 2 - Não")
+    andar = input(">> ")
+    if andar == "1":
+        print("Você começou a andar pelo mundo...")
+        print("Um inimigo apareceu!")
+        batalha.batalhas(meu_personagem)
+    elif andar == "2":
+        print("Você decidiu não andar por enquanto.")
+    
 if __name__ == "__main__":
     main()
