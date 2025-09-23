@@ -1,4 +1,5 @@
-from definicoes import Classe
+from models.definicoes import Classe
+
 
 Guerreiro = Classe(
     nome = "Guerreiro", vida = 10, ataque = 1, defesa = 5, xp = 0

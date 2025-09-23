@@ -1,4 +1,19 @@
 import random
+
+def escolher_atributo(atributos):
+    print("\nEscolha em qual atributo deseja colocar:")
+    atributos_lista = list(atributos.keys())
+    for idx, nome in enumerate(atributos_lista, 1):
+        print(f"{idx}. {nome} (atual: {atributos[nome]})")
+
+    while True:
+        escolha = input("Digite o número do atributo: ")
+        if escolha.isdigit() and 1 <= int(escolha) <= len(atributos_lista):
+            return atributos_lista[int(escolha) - 1]
+        else:
+            print("Escolha inválida, tente novamente.")
+
+
 def rolar_dado():
     soma = 0
     for _ in range(3):
@@ -38,6 +53,7 @@ def gerar_atributos_heroico():
         "Sabedoria": rolar_dado_heroico(),
         "Carisma": rolar_dado_heroico()
     }
+    escolher_atributo()
     return atributos
 
 def gerar_atributos_aventureiro():
@@ -51,22 +67,7 @@ def gerar_atributos_aventureiro():
         "Carisma": 0
     }
 
-    atributos_lista = list(atributos.keys())
 
-    for i in range(6):
-        valor = rolar_dado()
-        print(f"\nVocê rolou {valor}.")
-        print("Escolha em qual atributo deseja colocar:")
-        for idx, nome in enumerate(atributos_lista, 1):
-            print(f"{idx}. {nome} (atual: {atributos[nome]})")
-
-        while True:
-            escolha = input("Digite o número do atributo: ")
-            if escolha.isdigit() and 1 <= int(escolha) <= 6:
-                atributo_escolhido = atributos_lista[int(escolha) - 1]
-                atributos[atributo_escolhido] += valor
-                break
-            else:
-                print("Escolha inválida, tente novamente.")
+    escolher_atributo()
 
     return atributos

@@ -1,4 +1,4 @@
-from definicoes import Raca
+from models.definicoes import Raca
 
 Anao = Raca(
     nome="Anão",

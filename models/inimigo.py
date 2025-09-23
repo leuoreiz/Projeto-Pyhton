@@ -1,6 +1,6 @@
-from personagem import Personagem
+from models.personagem import Personagem
 from classe import Guerreiro, Ladrao, Mago
-from raca import Humano, Elfo, Anao
+from models.raca import Humano, Elfo, Anao
 import random
 import geracao_atributos
 

@@ -1,5 +1,5 @@
 
-from personagem import Personagem
+from models.personagem import Personagem
 import geracao_atributos
 import batalha
 
