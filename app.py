@@ -6,7 +6,7 @@ import models.geracao_atributos as geracao_atributos
 
 app = Flask(__name__)
 # Chave secreta necessária para que as sessões funcionem
-app.secret_key = 'sua_chave_secreta_muito_segura_aqui'
+app.secret_key = 'sunga_branca'
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -25,41 +25,85 @@ def index():
 
 @app.route("/atributos", methods=["GET", "POST"])
 def escolher_atributos():
-    """Página para escolher o modo de rolagem de atributos."""
+    
     if 'nome' not in session:
         return redirect(url_for('index'))  # Redireciona se os dados básicos não existirem
 
     if request.method == "POST":
         modo = request.form.get("modo")
-        atributos_finais = {}
-        if modo == "1":
-            atributos_finais = geracao_atributos.gerar_atributos_classico()
-        elif modo in ["2", "3"]:
-            if modo == "2":
-                atributos_finais = list(geracao_atributos.gerar_atributos_heroico())
-            else: 
-                atributos_finais = list(geracao_atributos.gerar_atributos_aventureiro())
-        else:
-            atributos_finais = geracao_atributos.gerar_atributos_classico()
-
         
-        classe_obj = CLASSES_DISPONIVEIS[session['id_classe']]
-        raca_obj = RACAS_DISPONIVEIS[session['id_raca']]
+        # Modo Clássico cria o personagem diretamente
+        if modo == "1":
+            atributos = geracao_atributos.gerar_atributos_classico()
+            
+            classe_obj = CLASSES_DISPONIVEIS[session["id_classe"]]
+            raca_obj = RACAS_DISPONIVEIS[session["id_raca"]]
 
-        # Cria a instância do personagem passando os objetos
-        heroi = Personagem(
-            nome=session['nome'],
-            classe=classe_obj,
-            raca=raca_obj
-        )
-        heroi.atributos = atributos_finais
+            heroi = Personagem(
+                nome=session["nome"],
+                classe=classe_obj,
+                raca=raca_obj,
+            )
+            heroi.atributos = atributos
+            session["heroi"] = heroi.to_dict()
+            return redirect(url_for("mostrar_personagem"))
 
-        # Armazena o herói na sessão usando o método to_dict()
-        session['heroi'] = heroi.to_dict()
+        # Outros modos redirecionam para a distribuição
+        elif modo == "2":  # heróico
+            valores = geracao_atributos.gerar_atributos_heroico()
+        elif modo == "3":  # aventureiro
+            valores = geracao_atributos.gerar_atributos_aventureiro()
+        else: # Se nenhum modo for selecionado, volta
+            return redirect(url_for("escolher_atributos"))
 
-        return redirect(url_for('mostrar_personagem'))
+        session["valores"] = valores
+        session["modo_atributos"] = modo
+        return redirect(url_for("distribuir_atributos"))
 
     return render_template("atributos.html")
+
+
+@app.route("/distribuir", methods=["GET", "POST"])
+def distribuir_atributos():
+    valores = session.get("valores")
+    modo = session.get("modo_atributos")
+
+    if not valores:
+        return redirect(url_for("escolher_atributos"))
+
+    atributos_nomes = ["Força", "Destreza", "Constituição", "Inteligência", "Sabedoria", "Carisma"]
+
+    if request.method == "POST":
+        valores_usados = [int(v) for v in request.form.values()]
+        if sorted(valores_usados) != sorted(valores):
+            # Adicionar uma mensagem de erro aqui seria ideal
+            return redirect(url_for('distribuir_atributos'))
+
+        atributos_finais = {}
+        for nome in atributos_nomes:
+            escolha = request.form.get(nome)
+            if escolha:
+                atributos_finais[nome] = int(escolha)
+
+        # Cria personagem
+        classe_obj = CLASSES_DISPONIVEIS[session["id_classe"]]
+        raca_obj = RACAS_DISPONIVEIS[session["id_raca"]]
+
+        heroi = Personagem(
+            nome=session["nome"],
+            classe=classe_obj,
+            raca=raca_obj,
+        )
+        heroi.atributos = atributos_finais
+        session["heroi"] = heroi.to_dict()
+
+        # Limpa os dados temporários da sessão
+        session.pop("valores", None)
+        session.pop("modo_atributos", None)
+
+        return redirect(url_for("mostrar_personagem"))
+
+    return render_template("distribuir.html", valores=valores, atributos=atributos_nomes, modo=modo)
 
 
 @app.route("/personagem")

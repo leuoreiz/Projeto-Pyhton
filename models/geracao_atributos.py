@@ -1,5 +1,6 @@
 import random
 
+
 def escolher_atributo(atributos):
     print("\nEscolha em qual atributo deseja colocar:")
     atributos_lista = list(atributos.keys())
@@ -14,60 +15,39 @@ def escolher_atributo(atributos):
             print("Escolha inválida, tente novamente.")
 
 
-def rolar_dado():
-    soma = 0
-    for _ in range(3):
-        dado = random.randint(1, 6)
-        print(f"Você rolou {dado}")
-        soma += dado
-    return soma
-    print(f"Você rolou {dado}")
+# --- Funções Auxiliares de Rolagem de Dados ---
 
-def rolar_dado_heroico():
-    dados = [random.randint(1, 6) for _ in range(4)]
-    print(f"Rolagens: {dados}")
-    menor = min(dados)
-    dados.remove(menor)
-    soma = sum(dados)
-    return soma
+def rolar_3d6():
+    """Rola 3 dados de 6 lados e retorna a soma."""
+    return sum(random.randint(1, 6) for _ in range(3))
+
+def rolar_4d6_drop_lowest():
+    """Rola 4 dados de 6 lados, descarta o menor e retorna a soma dos 3 maiores."""
+    rolagens = [random.randint(1, 6) for _ in range(4)]
+    rolagens.remove(min(rolagens))
+    return sum(rolagens)
+
+
+# --- Funções Principais Usadas pelo app.py ---
 
 def gerar_atributos_classico():
+    """Gera um dicionário de atributos com valores fixos (3d6)."""
     print("\nRolando dados para seus atributos (modo clássico)...\n")
-    atributos = {
-        "Força": rolar_dado(),
-        "Inteligência": rolar_dado(),
-        "Destreza": rolar_dado(),
-        "Constituição": rolar_dado(),
-        "Sabedoria": rolar_dado(),
-        "Carisma": rolar_dado()
+    return {
+        "Força": rolar_3d6(),
+        "Inteligência": rolar_3d6(),
+        "Destreza": rolar_3d6(),
+        "Constituição": rolar_3d6(),
+        "Sabedoria": rolar_3d6(),
+        "Carisma": rolar_3d6()
     }
-    return atributos
 
 def gerar_atributos_heroico():
+    """Gera uma lista com 6 valores (4d6 drop lowest) para serem distribuídos."""
     print("\nRolando dados para seus atributos (modo heroico)...\n")
-    atributos = {
-        "Força": rolar_dado_heroico(),
-        "Inteligência": rolar_dado_heroico(),
-        "Destreza": rolar_dado_heroico(),
-        "Constituição": rolar_dado_heroico(),
-        "Sabedoria": rolar_dado_heroico(),
-        "Carisma": rolar_dado_heroico()
-    }
-    escolher_atributo()
-    return atributos
+    return [rolar_4d6_drop_lowest() for _ in range(6)]
 
 def gerar_atributos_aventureiro():
+    """Gera uma lista com 6 valores (3d6) para serem distribuídos."""
     print("\nRolando dados para seus atributos (modo aventureiro)...\n")
-    atributos = {
-        "Força": 0,
-        "Inteligência": 0,
-        "Destreza": 0,
-        "Constituição": 0,
-        "Sabedoria": 0,
-        "Carisma": 0
-    }
-
-
-    escolher_atributo()
-
-    return atributos
+    return [rolar_3d6() for _ in range(6)]
