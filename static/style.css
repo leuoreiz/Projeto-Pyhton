@@ -1,9 +1,10 @@
 body {
     margin: 0;
-    padding: 0;
+    padding: 20px;
     font-family: 'Trebuchet MS', sans-serif;
     background-image: url('imgs/fundobg.png');
     background-size: cover;
+    background-attachment: fixed; /* Mantém o fundo fixo ao rolar a página */
     color: #fff;
     text-align: center;
 }
@@ -19,6 +20,66 @@ form {
     display: inline-block;
     margin-top: 50px;
 }
+
+/* --- ESTILO MELHORADO PARA A FICHA DO PERSONAGEM --- */
+.ficha-container {
+    background-color: rgba(10, 25, 15, 0.75); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 8px; 
+    border: 1px solid rgba(255, 255, 255, 0.18); 
+    max-width: 550px; 
+    margin: 40px auto; 
+    padding: 2rem 3rem; 
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); 
+    text-align: left; 
+}
+
+.ficha-container h1, .ficha-container h2 {
+    text-align: center; 
+    color: #ffde7a; 
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.ficha-container h2 {
+    font-size: 1.5em;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2); 
+}
+
+.ficha-container p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin: 0.5rem 0;
+}
+
+.ficha-container ul {
+    list-style-type: none; 
+    padding: 0;
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 0.5rem 2rem; 
+}
+
+.ficha-container li {
+    font-size: 1.1em;
+}
+
+.ficha-container .links {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ficha-container small {
+    display: block;
+    margin-top: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+/* --- FIM DO ESTILO DA FICHA --- */
 
 label {
     display: block;
@@ -38,8 +99,66 @@ button {
     background-color: #ffcc00;
     font-weight: bold;
     cursor: pointer;
+    transition: background-color 0.3s; 
 }
 
 button:hover {
     background-color: #ffaa00;
 }
+
+a {
+    color: #ffcc00;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* --- ESTILO PARA TRANSFORMAR RADIO EM BOTÕES DE SELEÇÃO --- */
+.modo-selecao-container input[type="radio"] {
+    display: none;
+}
+
+.modo-opcao {
+    display: block;
+    position: relative; 
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px solid #555;
+    border-radius: 8px;
+    padding: 15px 20px;
+    padding-left: 50px; 
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.modo-opcao::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #888;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.modo-opcao:hover {
+    border-color: #ffcc00;
+}
+
+.modo-selecao-container input[type="radio"]:checked + .modo-opcao {
+    background-color: rgba(255, 204, 0, 0.2);
+    border-color: #ffcc00;
+}
+
+.modo-selecao-container input[type="radio"]:checked + .modo-opcao::before {
+    background-color: #ffcc00;
+    border-color: #ffde7a;
+}
+

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Distribua Seus Atributos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Distribuir Atributos</h1>
+    
+    <form method="POST">
+        <p>Valores rolados: <strong>{{ valores|sort(reverse=True)|join(', ') }}</strong></p>
+        <p>Atribua cada valor a um atributo. Um valor não pode ser usado mais de uma vez.</p>
+        <br>
+
+        {% for atributo in atributos %}
+        <div>
+            <label for="{{ atributo }}">{{ atributo }}</label>
+            <select name="{{ atributo }}" id="{{ atributo }}" required>
+                <option value="">-- Escolha um valor --</option>
+                {% for valor in valores %}
+                <option value="{{ valor }}">{{ valor }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <br>
+        {% endfor %}
+        <button type="submit">Confirmar e Finalizar Personagem</button>
+    </form>
+</body>
+</html>
+

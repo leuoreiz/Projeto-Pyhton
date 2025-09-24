@@ -1,22 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <title>Escolha seus Atributos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Como deseja gerar seus atributos?</h1>
     <form method="post">
-        <input type="radio" id="classico" name="modo" value="1" checked>
-        <label for="classico">Clássico (3d6)</label><br>
+        <h1>Como deseja gerar seus atributos?</h1>
+        
+        <div class="modo-selecao-container">
 
-        <input type="radio" id="heroico" name="modo" value="2">
-        <label for="heroico">Heróico (4d6, descarta o menor e escolha onde colocar)</label><br>
+            <!-- Opção 1: Clássico -->
+            <label>
+                <input type="radio" name="modo" value="1" checked>
+                <div class="modo-opcao">
+                    <h2>Clássico (3d6)</h2>
+                    <p>Os atributos são rolados e atribuídos automaticamente.</p>
+                </div>
+            </label>
 
-        <input type="radio" id="aventureiro" name="modo" value="3">
-        <label for="aventureiro">aventureiro (3d6 e escolha onde colocar)</label><br>
+            <!-- Opção 2: Heróico -->
+            <label>
+                <input type="radio" name="modo" value="2">
+                <div class="modo-opcao">
+                    <h2>Heróico (4d6, descarta o menor)</h2>
+                    <p>Você rola valores mais altos e escolhe onde colocar cada um.</p>
+                </div>
+            </label>
+
+            <!-- Opção 3: Aventureiro -->
+            <label>
+                <input type="radio" name="modo" value="3">
+                <div class="modo-opcao">
+                    <h2>Aventureiro (3d6)</h2>
+                    <p>Você rola valores clássicos e escolhe onde colocar cada um.</p>
+                </div>
+            </label>
+
+        </div>
 
         <button type="submit">Gerar Atributos e Criar Personagem</button>
     </form>
 </body>
 </html>
+
